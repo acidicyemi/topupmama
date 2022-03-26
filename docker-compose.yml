@@ -1,14 +1,14 @@
 version: "3.7"
 services:
-  app:
+  topupmama_app:
     build:
       args:
         user: acidicyemi
         uid: 1000
       context: ./
       dockerfile: ./.docker/php/Dockerfile
-    image: topupmama
-    container_name: topupmama-app
+    image: topupmama_app
+    container_name: topupmama_app
     restart: unless-stopped
     working_dir: /var/www/
     volumes:
@@ -16,26 +16,31 @@ services:
     networks:
       - topupmama
 
-  db:
-    image: mysql:5.7
-    container_name: topupmama-db
+  topupmama_mysql:
+    image: mysql:8.0.26
+    container_name: topupmama_mysql
+    command: --default-authentication-plugin=mysql_native_password
     restart: unless-stopped
+    tty: true
+    ports:
+      - ${DB_PORT_OUTSIDE?err}:3306
     environment:
-      MYSQL_DATABASE: ${DB_DATABASE}
-      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
-      MYSQL_PASSWORD: ${DB_PASSWORD}
-      MYSQL_USER: ${DB_USERNAME}
-      SERVICE_TAGS: dev
-      SERVICE_NAME: mysql
-    volumes:
-      - ./.docker/mysql:/docker-entrypoint-initdb.d
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD?err}
+      MYSQL_PASSWORD: ${DB_PASSWORD?err}
     networks:
-      - topupmama
+      - gateway_network
+    volumes:
+      - .docker/mysql/setup.sql:/docker-entrypoint-initdb.d/setup.sql
+      - .docker/mysql/my.conf:/etc/my.cnf
+      - topupmama_mysql:/var/lib/mysql
 
   nginx:
     image: nginx:alpine
-    container_name: topupmama-nginx
+    container_name: topupmama_nginx
     restart: unless-stopped
+    depends_on:
+      - topupmama_mysql
+      - topupmama_app
     ports:
       - 8000:80
     volumes:

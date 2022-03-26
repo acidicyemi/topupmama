@@ -1,0 +1,3 @@
+CREATE DATABASE IF NOT EXISTS topupmama;
+CREATE USER IF NOT EXISTS topupmama@localhost IDENTIFIED BY 'password';
+GRANT ALL PRIVILEGES ON *.* TO topupmama@localhost WITH GRANT OPTION;
