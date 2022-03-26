@@ -41,7 +41,7 @@ services:
       - topupmama_mysql
       - topupmama_app
     ports:
-      - 8000:80
+      - ${APP_PORT?err}:80
     volumes:
       - ./:/var/www
       - ./.docker/nginx:/etc/nginx/conf.d/
