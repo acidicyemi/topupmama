@@ -23,16 +23,15 @@ services:
     restart: unless-stopped
     tty: true
     ports:
-      - ${DB_PORT_OUTSIDE?err}:3306
+      - ${DB_PORT?err}:3306
     environment:
       MYSQL_ROOT_PASSWORD: ${DB_PASSWORD?err}
       MYSQL_PASSWORD: ${DB_PASSWORD?err}
     networks:
-      - gateway_network
+      - topupmama
     volumes:
       - .docker/mysql/setup.sql:/docker-entrypoint-initdb.d/setup.sql
       - .docker/mysql/my.conf:/etc/my.cnf
-      - topupmama_mysql:/var/lib/mysql
 
   nginx:
     image: nginx:alpine
