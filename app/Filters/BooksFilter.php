@@ -2,7 +2,7 @@
 
 namespace App\Filters;
 
-class BooksFilters extends QueryFilter
+class BooksFilter extends QueryFilter
 {
-    
+
 }

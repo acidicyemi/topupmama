@@ -2,6 +2,8 @@
 
 /** @var \Laravel\Lumen\Routing\Router $router */
 
+use App\Http\Controllers\BooksController;
+
 /*
 |--------------------------------------------------------------------------
 | Application Routes
@@ -14,5 +16,11 @@
 */
 
 $router->get('/', function () use ($router) {
-    return $router->app->version();
+    return response()->json([
+        "version" => $router->app->version()
+    ]);
+});
+
+$router->group(["prefix" => "/api/v1/books"], function () use ($router) {
+    $router->get('/', ['as' => 'listBooks', 'uses' => 'BooksController@listBooks']);
 });
