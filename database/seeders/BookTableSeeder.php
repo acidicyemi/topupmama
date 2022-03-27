@@ -38,7 +38,6 @@ class BookTableSeeder extends Seeder
                 "name" => $r["name"],
                 "publisher_id" => $publisher->id,
                 "country_id" => $country->id,
-                "resource_id" => 1,
                 "isbn" => $r["isbn"],
                 "number_of_pages" => $r["numberOfPages"],
                 "released_date" => $r["released"],
