@@ -16,6 +16,8 @@ class CreateCharactersTable extends Migration
         Schema::create('characters', function (Blueprint $table) {
             $table->id();
             $table->string("name")->nullable(); // make nullable since we are not really fetching by character name
+            $table->string("culture")->nullable();
+            $table->string("gender", 50);
             $table->softDeletes();
             $table->timestamps();
         });
