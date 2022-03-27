@@ -18,7 +18,6 @@ class CreateBooksTable extends Migration
             $table->unsignedBigInteger("publisher_id")->index();
             $table->unsignedBigInteger("country_id")->index();
             $table->string("name");
-            $table->unsignedBigInteger("resource_id");
             $table->string("media_type");
             $table->string("isbn", 20);
             $table->integer("number_of_pages");
