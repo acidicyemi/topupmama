@@ -18,6 +18,7 @@ class CreateCommentsTable extends Migration
             $table->unsignedBigInteger("book_id");
             $table->ipAddress("ip_address");
             $table->text("comment");
+            $table->softDeletes();
             $table->timestamps();
         });
     }

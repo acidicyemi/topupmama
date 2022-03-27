@@ -7,6 +7,7 @@ use App\Models\Character;
 use App\Filters\QueryFilter;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
@@ -32,6 +33,16 @@ class Book extends Model
     public function characters(): BelongsToMany
     {
         return $this->belongsToMany(Character::class)->withPivot(["is_pov"]);
+    }
+
+    /**
+     * Get all of the comments for the Book
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function comments(): HasMany
+    {
+        return $this->hasMany(Comment::class);
     }
 
     public function scopeFilter($query, QueryFilter $filters)

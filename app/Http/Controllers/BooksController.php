@@ -21,7 +21,7 @@ class BooksController extends Controller
 
     public function listBooks(BooksFilter $filters)
     {
-        $bks = Book::with(["authors", "characters"])->filter($filters)->paginate(12);
+        $bks = Book::with(["authors", "characters", "comments"])->filter($filters)->paginate(12);
 
         return new BooksCollection($bks);
     }

@@ -20,6 +20,7 @@ class BookResource extends JsonResource
             "isbn" => $this->isbn,
             "releasedDate" => $this->released_date,
             "numberofPages" => $this->number_of_pages,
+            "commentCount" => $this->comments->count(),
             "mediaType" => $this->media_type,
             "createdAt" => $this->created_at,
             "authors" => AuthorResource::collection($this->authors),
