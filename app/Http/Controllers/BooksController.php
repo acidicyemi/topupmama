@@ -7,6 +7,7 @@ use App\Filters\BooksFilter;
 use Illuminate\Http\Request;
 use App\Services\BookService;
 use App\Http\Resources\BooksCollection;
+use Illuminate\Support\Facades\Validator;
 
 class BooksController extends Controller
 {
@@ -26,6 +27,14 @@ class BooksController extends Controller
 
     public function addComment(Request $request, $bookId)
     {
+        $validator = Validator::make($request->all(), [
+            'comment' => ["required", "string", "max:500"]
+        ]);
+
+        if ($validator->fails()) {
+            return $validator->errors();
+        }
+
         $book = Book::where(["id" => $bookId])->first();
 
         if (is_null($book)) {
@@ -43,7 +52,7 @@ class BooksController extends Controller
                 "status" => "success",
                 "message" => "comment added successfully",
                 "data" => $res["data"]
-            ]);
+            ], 200);
         }
         return response()->json([
             "status" => "failed",
