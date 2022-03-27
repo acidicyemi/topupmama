@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Author;
 use App\Models\Book;
 use App\Models\Country;
 use App\Models\Publisher;
@@ -20,6 +21,11 @@ class BookTableSeeder extends Seeder
         $res = Http::get('https://www.anapioficeandfire.com/api/books?pageSize=50')->json();
 
         foreach ($res as $r) {
+            $as = collect($r["authors"])->map(function($a) {
+                return Author::firstOrCreate([
+                    "name" => $a
+                ])->id;
+            });
             $country = Country::firstOrCreate([
                 "name" => $r["country"]
             ]);
@@ -28,7 +34,7 @@ class BookTableSeeder extends Seeder
                 "name" => $r["publisher"]
             ]);
 
-            Book::firstOrCreate([
+            $b = Book::firstOrCreate([
                 "name" => $r["name"],
                 "publisher_id" => $publisher->id,
                 "country_id" => $country->id,
@@ -38,6 +44,8 @@ class BookTableSeeder extends Seeder
                 "released_date" => $r["released"],
                 "media_type" => $r["mediaType"],
             ]);
+            
+            $b->authors()->sync($as);
         }
         
     }
