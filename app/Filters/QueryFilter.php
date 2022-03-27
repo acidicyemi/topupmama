@@ -46,4 +46,13 @@ abstract class QueryFilter {
         return $this->builder;
     }
 
+    public function getRequest()
+    {
+        return $this->request;
+    }
+
+    public function addToRequest(array $data)
+    {
+        $this->getRequest()->request->add($data);
+    }
 }

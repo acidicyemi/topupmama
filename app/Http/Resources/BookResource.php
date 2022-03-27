@@ -18,10 +18,10 @@ class BookResource extends JsonResource
             "id" => $this->id,
             "name" => $this->name,
             "isbn" => $this->isbn,
-            "releasedDate" => $this->released_date,
             "numberofPages" => $this->number_of_pages,
             "commentCount" => $this->comments->count(),
             "mediaType" => $this->media_type,
+            "releasedDate" => $this->released_date,
             "createdAt" => $this->created_at,
             "authors" => AuthorResource::collection($this->authors),
             // "characters" => CharacterResource::collection($this->characters)

@@ -22,6 +22,7 @@ class BooksController extends Controller
 
     public function listBooks(BooksFilter $filters)
     {
+        $filters->addToRequest(["orderByReleaseDate" => "asc"]);
         $bks = Book::with(["authors", "characters", "comments"])->filter($filters)->paginate(12);
 
         return new BooksCollection($bks);
@@ -75,8 +76,7 @@ class BooksController extends Controller
             ], 404);
         }
         $comments = $book->comments()->paginate(10);
-        
-        return new BooksCommentsCollection($comments);
 
+        return new BooksCommentsCollection($comments);
     }
 }
