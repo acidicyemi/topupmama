@@ -7,6 +7,7 @@ use App\Filters\BooksFilter;
 use Illuminate\Http\Request;
 use App\Services\BookService;
 use App\Http\Resources\BooksCollection;
+use App\Http\Resources\CommentResource;
 use Illuminate\Support\Facades\Validator;
 
 class BooksController extends Controller
@@ -51,7 +52,7 @@ class BooksController extends Controller
             return response()->json([
                 "status" => "success",
                 "message" => "comment added successfully",
-                "data" => $res["data"]
+                "data" => new CommentResource($res["data"])
             ], 200);
         }
         return response()->json([
