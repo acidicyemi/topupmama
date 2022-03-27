@@ -22,6 +22,7 @@ $router->get('/', function () use ($router) {
 });
 
 $router->group(["prefix" => "/api/v1/books"], function () use ($router) {
-    $router->get('/', ['as' => 'listBooks', 'uses' => 'BooksController@listBooks']);
-    $router->post('/{bookId}/addComment', ['as' => 'listBooks', 'uses' => 'BooksController@addComment']);
+    $router->get('/', ['as' => 'book.list', 'uses' => 'BooksController@listBooks']);
+    $router->get('/{bookId}/getComments', ['as' => 'book.getComments', 'uses' => 'BooksController@getComments']);
+    $router->post('/{bookId}/addComment', ['as' => 'book.addComment', 'uses' => 'BooksController@addComment']);
 });

@@ -9,6 +9,7 @@ use App\Services\BookService;
 use App\Http\Resources\BooksCollection;
 use App\Http\Resources\CommentResource;
 use Illuminate\Support\Facades\Validator;
+use App\Http\Resources\BooksCommentsCollection;
 
 class BooksController extends Controller
 {
@@ -60,5 +61,22 @@ class BooksController extends Controller
             "message" => "unable to add Comment",
             "data" => null
         ], 400);
+    }
+
+    public function getComments($bookId)
+    {
+        $book = Book::with(["comments"])->where(["id" => $bookId])->first();
+
+        if (is_null($book)) {
+            return response()->json([
+                "status" => "failed",
+                "message" => "book not found",
+                "data" => ""
+            ], 404);
+        }
+        $comments = $book->comments()->paginate(10);
+        
+        return new BooksCommentsCollection($comments);
+
     }
 }

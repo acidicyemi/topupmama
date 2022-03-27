@@ -24,7 +24,7 @@ class BookResource extends JsonResource
             "mediaType" => $this->media_type,
             "createdAt" => $this->created_at,
             "authors" => AuthorResource::collection($this->authors),
-            "characters" => CharacterResource::collection($this->characters)
+            // "characters" => CharacterResource::collection($this->characters)
         ];
     }
 }
