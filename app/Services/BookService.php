@@ -14,7 +14,7 @@ class BookService
             $c = new Comment;
             $c->book_id = $book->id;
             $c->comment = $comment;
-            $c->ip_adderes = $ip;
+            $c->ip_address = $ip;
             $c->save();
             return ["status" => true, "data" => $c];
         } catch (\Throwable $th) {
