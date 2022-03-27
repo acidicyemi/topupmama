@@ -75,7 +75,7 @@ class BooksController extends Controller
                 "data" => ""
             ], 404);
         }
-        $comments = $book->comments()->paginate(10);
+        $comments = $book->comments()->orderBy("created_at", "DESC")->paginate(10);
 
         return new BooksCommentsCollection($comments);
     }
