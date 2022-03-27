@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\Book;
 use App\Models\Country;
+use App\Models\Publisher;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Http;
 
@@ -22,9 +23,14 @@ class BookTableSeeder extends Seeder
             $country = Country::firstOrCreate([
                 "name" => $r["country"]
             ]);
+
+            $publisher = Publisher::firstOrCreate([
+                "name" => $r["publisher"]
+            ]);
+
             Book::firstOrCreate([
                 "name" => $r["name"],
-                "publisher_id" => 1,
+                "publisher_id" => $publisher->id,
                 "country_id" => $country->id,
                 "resource_id" => 1,
                 "isbn" => $r["isbn"],
