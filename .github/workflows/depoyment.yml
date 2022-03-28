@@ -24,9 +24,6 @@ jobs:
       - name: Install Dependencies
         run: composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
 
-      - name: Generate key
-        run: php artisan key:generate
-
       - name: Directory Permissions
         run: chmod -R 777 storage bootstrap/cache
 
@@ -50,5 +47,46 @@ jobs:
       - name: Store Artifact for distribution
         uses: actions/upload-artifact@v2
         with:
-          name: topupmama-gateway
+          name: topupmama-app
           path: ${{ github.sha }}.tar.gz
+
+  push-app-to-server:
+    runs-on: ubuntu-latest
+
+    needs: create-deployment-artifacts
+
+    steps:
+      - name: setup download artifact actions
+        uses: actions/download-artifact@v2
+        with:
+          name: topupmama-app
+
+      - name: Upload Build
+        uses: appleboy/scp-action@master
+        with:
+          host: ${{ secrets.SERVER_HOST }}
+          username: ${{ secrets.SERVER_USERNAME }}
+          key: ${{ secrets.AWS_PRIVATE_KEY }}
+          port: ${{ secrets.SERVER_PORT }}
+          source: ${{ github.sha }}.tar.gz
+          target: "/var/www/topupmama/artifacts"
+
+      - name: Extract Archieve and create directories
+        uses: appleboy/ssh-action@master
+        env:
+          GITHUB_SHA: ${{ github.sha }}
+        with:
+          host: ${{ secrets.SERVER_HOST }}
+          username: ${{ secrets.SERVER_USERNAME }}
+          key: ${{ secrets.AWS_PRIVATE_KEY }}
+          port: ${{ secrets.SERVER_PORT }}
+          envs: GITHUB_SHA
+          script: |
+            mkdir -p /var/www/topupmama/releases/${GITHUB_SHA}
+            tar xzf /var/www/topupmama/artifacts/${GITHUB_SHA}.tar.gz -C /var/www/topupmama/releases/${GITHUB_SHA}
+
+            rm -rf /var/www/topupmama/releases/${GITHUB_SHA}/storage
+            mkdir -p  /var/www/topupmama/storage/{app,public,framework,logs}
+            mkdir -p  /var/www/topupmama/storage/framework/{cache,sessions,testing,views}
+            mkdir -p  /var/www/topupmama/storage/framework/cache/data
+            chmod -R 0777  /var/www/topupmama/storage
