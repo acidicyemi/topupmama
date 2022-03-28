@@ -17,6 +17,8 @@ class CharacterResource extends JsonResource
         return [
             "id" => $this->id,
             "name" => $this->name,
+            "gender" => $this->gender,
+            "culture" => $this->culture,
             "createdAt" => $this->created_at,
         ];
     }

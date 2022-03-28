@@ -4,7 +4,7 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\ResourceCollection;
 
-class BooksCommentsCollection extends ResourceCollection
+class BooksCharactersCollection extends ResourceCollection
 {
     /**
      * Transform the resource collection into an array.
@@ -16,8 +16,8 @@ class BooksCommentsCollection extends ResourceCollection
     {
         return [
             "status" => "success",
-            "message" => "books comments listed",
-            "data" => CommentResource::collection($this)
+            "message" => "books characters listed",
+            "data" => CharacterResource::collection($this),
         ];
     }
 }

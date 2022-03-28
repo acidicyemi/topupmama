@@ -24,5 +24,6 @@ $router->get('/', function () use ($router) {
 $router->group(["prefix" => "/api/v1/books"], function () use ($router) {
     $router->get('/', ['as' => 'book.list', 'uses' => 'BooksController@listBooks']);
     $router->get('/{bookId}/getComments', ['as' => 'book.getComments', 'uses' => 'BooksController@getComments']);
+    $router->get('/{bookId}/getCharacters', ['as' => 'book.getCharacters', 'uses' => 'BooksController@getCharacters']);
     $router->post('/{bookId}/addComment', ['as' => 'book.addComment', 'uses' => 'BooksController@addComment']);
 });
