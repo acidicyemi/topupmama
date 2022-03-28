@@ -67,6 +67,9 @@ jobs:
           port: ${{ secrets.SERVER_PORT }}
           source: ${{ github.sha }}.tar.gz
           target: "/var/www/topupmama/artifacts"
+          script: |
+            whoami
+            cd /var/www/topupmama
 
       - name: Extract Archieve and create directories
         uses: appleboy/ssh-action@master
