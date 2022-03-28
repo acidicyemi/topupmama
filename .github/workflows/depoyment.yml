@@ -39,7 +39,7 @@ jobs:
         # -czf -c for create a new archive -z for g compression -f for output in a file
         env:
           GITHUB_SHA: ${{ github.sha }}
-        run: tar -czf "${GITHUB_SHA}".tar.gz  --directory=/ --exclude=*.git
+        run: tar -czf "${GITHUB_SHA}".tar.gz --exclude=*.git *
 
       - name: Store Artifact for distribution
         uses: actions/upload-artifact@v2
