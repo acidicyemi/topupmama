@@ -80,7 +80,7 @@ jobs:
           envs: GITHUB_SHA
           script: |
             sudo mkdir -p /var/www/topupmama/releases/${GITHUB_SHA}
-            sudotar xzf /var/www/topupmama/artifacts/${GITHUB_SHA}.tar.gz -C /var/www/topupmama/releases/${GITHUB_SHA}
+            sudo tar xzf /var/www/topupmama/artifacts/${GITHUB_SHA}.tar.gz -C /var/www/topupmama/releases/${GITHUB_SHA}
 
             sudo rm -rf /var/www/topupmama/releases/${GITHUB_SHA}/storage
             sudo mkdir -p  /var/www/topupmama/storage/{app,public,framework,logs}
