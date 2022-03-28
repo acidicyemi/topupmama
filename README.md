@@ -38,6 +38,11 @@ start the app with docker compose dependencies
   docker-compose up --build
 ```
 
+run migration open container shell and run
+
+```bash
+  php artisan migrate && php artisan db:seed
+```
 Start the server will run on the port you specified in your .env
 
 
